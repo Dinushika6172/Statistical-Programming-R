@@ -1,0 +1,1158 @@
+---
+title: "Project_R_G4"
+author: "Dinushika Sandamali"
+date: "2024-02-17"
+output: html_document: default
+---
+
+```{r}
+#Import the data set
+mydata<-read.csv("F:/2nd Year/Semester II/Dinushika/dataset_G4.csv")
+mydata
+```
+```{r}
+#Find the missing data count in the data set
+missing_count <- colSums(is.na(mydata))
+missing_count
+
+#Find the empty values count of the data set 
+empty_count <- colSums(mydata == "0")
+empty_count
+```
+```{r}
+
+#Remove the rows,where missing values greater than 75%
+cdata<-mydata[(rowSums(!is.na(mydata[,5:ncol(mydata)])))>=48,] 
+cdata
+```
+```{r}
+#Replace missing values with row mean
+for(i in 1:nrow(cdata)){
+  r<-cdata[i, 5:ncol(cdata)]  
+  r_nv<-as.numeric(r[!is.na(r)])  
+  r_mean <- mean(r_nv, na.rm = TRUE) 
+  cdata[i, is.na(cdata[i,])] <- r_mean
+}
+cdata
+```
+```{r}
+# Generate the separate data frames for each country
+df_1 <- subset(cdata,Country.Code == "DEU")
+df_1
+df_2 <- subset(cdata,Country.Code == "ESP")
+df_2
+df_3 <- subset(cdata,Country.Code == "GBR")
+df_3
+```
+```{r}
+#Get transpose of the data frame
+Germony_df <- data.frame(t(df_1))
+Germony_df
+Spain_df <- data.frame(t(df_2))
+Spain_df
+UK_df <- data.frame(t(df_3))
+UK_df
+
+```
+```{r : Descriptive statistic for the Germony under the 12 number of variables}
+Germony_df[,1] <- as.numeric(Germony_df[,1])
+
+#Variable 1 : Adjusted savings: natural resources depletion (% of GNI)
+max_of_depletion <- max(Germony_df[5:nrow(Germony_df),1])
+min_of_depletion <- min(Germony_df[5:nrow(Germony_df),1])
+mean_of_depletion <- mean(Germony_df[5:nrow(Germony_df),1])
+median_of_depletion <- median(Germony_df[5:nrow(Germony_df),1])
+varience_of_depletion <- var(Germony_df[5:nrow(Germony_df),1])
+sd_of_depletion <- sd(Germony_df[5:nrow(Germony_df),1])
+percentiles_of_depletion <- quantile(Germony_df[5:nrow(Germony_df),1],c(0.25,0.75))
+IQR_of_depletion <- IQR(Germony_df[5:nrow(Germony_df),1])
+
+#Print the results
+cat("\nThe maximum natural resources depletion in Germany : ",max_of_depletion)
+cat("\nThe minimum natural resources depletion in Germany : ",min_of_depletion)
+cat("\nThe mean of the natural resources depletion in Germany : ",mean_of_depletion)
+cat("\nThe median of the natural resources depletion in Germany : ",median_of_depletion)
+cat("\nThe varience of the natural resources depletion in Germany : ",varience_of_depletion)
+cat("\nThe standard deviation of the natural resources depletion in Germany : ",sd_of_depletion)
+cat("\nThe first quantile of the natural resources depletion in Germany : ",percentiles_of_depletion[1])
+cat("\nThe third quantile of the natural resources depletion in Germany : ",percentiles_of_depletion[2])
+cat("\nThe IQR of the natural resources depletion in Germany : ",IQR_of_depletion)
+
+
+#Variable 2 : Agricultural land (% of land area)
+Germony_df[,2] <- as.numeric(Germony_df[,2])
+
+max_of_land_area <- max(Germony_df[5:nrow(Germony_df),2])
+min_of_land_area <- min(Germony_df[5:nrow(Germony_df),2])
+mean_of_land_area <- mean(Germony_df[5:nrow(Germony_df),2])
+median_of_land_area <- median(Germony_df[5:nrow(Germony_df),2])
+varience_of_land_area <- var(Germony_df[5:nrow(Germony_df),2])
+sd_of_land_area <- sd(Germony_df[5:nrow(Germony_df),2])
+percentiles_of_land_area <- quantile(Germony_df[5:nrow(Germony_df),2],c(0.25,0.75))
+IQR_of_land_area <- IQR(Germony_df[5:nrow(Germony_df),2])
+
+#Print the results
+cat("\n\nThe maximum agricultural land area in Germany : ",max_of_land_area)
+cat("\nThe minimum agricultural land area in Germany : ",min_of_land_area)
+cat("\nThe mean of the agricultural land area in Germany : ",mean_of_land_area)
+cat("\nThe median of the agricultural land area in Germany : ",median_of_land_area)
+cat("\nThe varience of the agricultural land area in Germany : ",varience_of_land_area)
+cat("\nThe standard deviation of the agricultural land area in Germany : ",sd_of_land_area)
+cat("\nThe first quantile of the agricultural land area in Germany : ",percentiles_of_land_area[1])
+cat("\nThe third quantile of the agricultural land area in Germany : ",percentiles_of_land_area[2])
+cat("\nThe IQR of the agricultural land area in Germany : ",IQR_of_land_area)
+
+#Variable 3 : Cooling Degree Days
+Germony_df[,3] <- as.numeric(Germony_df[,3])
+
+max_of_degrees <- max(Germony_df[5:nrow(Germony_df),3])
+min_of_degrees <- min(Germony_df[5:nrow(Germony_df),3])
+mean_of_degrees <- mean(Germony_df[5:nrow(Germony_df),3])
+median_of_degrees <- median(Germony_df[5:nrow(Germony_df),3])
+varience_of_degrees <- var(Germony_df[5:nrow(Germony_df),3])
+sd_of_degrees <- sd(Germony_df[5:nrow(Germony_df),3])
+percentiles_of_degrees <- quantile(Germony_df[5:nrow(Germony_df),3],c(0.25,0.75))
+IQR_of_degrees <- IQR(Germony_df[5:nrow(Germony_df),3])
+
+#Print the results
+cat("\n\nThe maximum Cooling Degree Days in Germany : ",max_of_degrees)
+cat("\nThe minimum Cooling Degree Days in Germany : ",min_of_degrees)
+cat("\nThe mean of the Cooling Degree Days in Germany : ",mean_of_degrees)
+cat("\nThe median of the Cooling Degree Days in Germany : ",median_of_degrees)
+cat("\nThe varience of the Cooling Degree Days in Germany : ",varience_of_degrees)
+cat("\nThe standard deviation of the Cooling Degree Days in Germany : ",sd_of_degrees)
+cat("\nThe first quantile of the Cooling Degree Days in Germany : ",percentiles_of_degrees[1])
+cat("\nThe third quantile of the Cooling Degree Days in Germany : ",percentiles_of_degrees[2])
+cat("\nThe IQR of the Cooling Degree Days in Germany : ",IQR_of_degrees)
+
+#Variable 4 : Energy use (kg of oil equivalent per capita)
+Germony_df[,6] <- as.numeric(Germony_df[,6])
+
+max_kg_of_oil <- max(Germony_df[5:nrow(Germony_df),6])
+min_kg_of_oil <- min(Germony_df[5:nrow(Germony_df),6])
+mean_kg_of_oil <- mean(Germony_df[5:nrow(Germony_df),6])
+median_kg_of_oil <- median(Germony_df[5:nrow(Germony_df),6])
+varience_kg_of_oil <- var(Germony_df[5:nrow(Germony_df),6])
+sd_kg_of_oil <- sd(Germony_df[5:nrow(Germony_df),6])
+percentiles_kg_of_oil <- quantile(Germony_df[5:nrow(Germony_df),6],c(0.25,0.75))
+IQR_kg_of_oil <- IQR(Germony_df[5:nrow(Germony_df),6])
+
+#Print the results
+cat("\n\nThe maximum Energy use in Germany : ",max_kg_of_oil)
+cat("\nThe minimum Energy use in Germany : ",min_kg_of_oil)
+cat("\nThe mean of Energy use in Germany : ",mean_kg_of_oil)
+cat("\nThe median of Energy use in Germany : ",median_kg_of_oil)
+cat("\nThe varience of Energy use in Germany : ",varience_kg_of_oil)
+cat("\nThe standard deviation of Energy use in Germany : ",sd_kg_of_oil)
+cat("\nThe first quantile of Energy use in Germany : ",percentiles_kg_of_oil[1])
+cat("\nThe third quantile of Energy use in Germany : ",percentiles_kg_of_oil[2])
+cat("\nThe IQR of Energy use in Germany : ",IQR_kg_of_oil)
+
+#Variable 5 : Fertility rate, total (births per woman)
+Germony_df[,7] <- as.numeric(Germony_df[,7])
+
+max_Fertility_rate <- max(Germony_df[5:nrow(Germony_df),7])
+min_Fertility_rate <- min(Germony_df[5:nrow(Germony_df),7])
+mean_Fertility_rate <- mean(Germony_df[5:nrow(Germony_df),7])
+median_Fertility_rate <- median(Germony_df[5:nrow(Germony_df),7])
+varience_Fertility_rate <- var(Germony_df[5:nrow(Germony_df),7])
+sd_Fertility_rate <- sd(Germony_df[5:nrow(Germony_df),7])
+percentiles_Fertility_rate <- quantile(Germony_df[5:nrow(Germony_df),7],c(0.25,0.75))
+IQR_Fertility_rate <- IQR(Germony_df[5:nrow(Germony_df),7])
+
+#Print the results
+cat("\n\nThe maximum Fertility rate in Germany : ",max_Fertility_rate)
+cat("\nThe minimum Fertility rate in Germany : ",min_Fertility_rate)
+cat("\nThe mean of Fertility rate in Germany : ",mean_Fertility_rate)
+cat("\nThe median of Fertility rate in Germany : ",median_Fertility_rate)
+cat("\nThe varience of Fertility rate in Germany : ",varience_Fertility_rate)
+cat("\nThe standard deviation of Fertility rate in Germany : ",sd_Fertility_rate)
+cat("\nThe first quantile of Fertility rate in Germany : ",percentiles_Fertility_rate[1])
+cat("\nThe third quantile of Fertility rate in Germany : ",percentiles_Fertility_rate[2])
+cat("\nThe IQR of Fertility rate in Germany : ",IQR_Fertility_rate)
+
+#Variable 6 : Food production index (2014-2016 = 100)
+Germony_df[,8] <- as.numeric(Germony_df[,8])
+
+max_index <- max(Germony_df[5:nrow(Germony_df),8])
+min_index <- min(Germony_df[5:nrow(Germony_df),8])
+mean_index <- mean(Germony_df[5:nrow(Germony_df),8])
+median_index <- median(Germony_df[5:nrow(Germony_df),8])
+varience_index <- var(Germony_df[5:nrow(Germony_df),8])
+sd_index <- sd(Germony_df[5:nrow(Germony_df),8])
+percentiles_index <- quantile(Germony_df[5:nrow(Germony_df),8],c(0.25,0.75))
+IQR_index <- IQR(Germony_df[5:nrow(Germony_df),8])
+
+#Print the results
+cat("\n\nThe maximum Food production index in Germany : ",max_index)
+cat("\nThe minimum Food production index in Germany : ",min_index)
+cat("\nThe mean of Food production index in Germany : ",mean_index)
+cat("\nThe median of Food production index in Germany : ",median_index)
+cat("\nThe varience of Food production index in Germany : ",varience_index)
+cat("\nThe standard deviation of Food production index in Germany : ",sd_index)
+cat("\nThe first quantile of Food production index in Germany : ",percentiles_index[1])
+cat("\nThe third quantile of Food production index in Germany : ",percentiles_index[2])
+cat("\nThe IQR of Food production index in Germany : ",IQR_index)
+
+#Variable 7 : Fossil fuel energy consumption (% of total)
+Germony_df[,9] <- as.numeric(Germony_df[,9])
+
+max_consumption <- max(Germony_df[5:nrow(Germony_df),9])
+min_consumption <- min(Germony_df[5:nrow(Germony_df),9])
+mean_consumption <- mean(Germony_df[5:nrow(Germony_df),9])
+median_consumption <- median(Germony_df[5:nrow(Germony_df),9])
+varience_consumption <- var(Germony_df[5:nrow(Germony_df),9])
+sd_consumption <- sd(Germony_df[5:nrow(Germony_df),9])
+percentiles_consumption <- quantile(Germony_df[5:nrow(Germony_df),9],c(0.25,0.75))
+IQR_consumption <- IQR(Germony_df[5:nrow(Germony_df),9])
+
+#Print the results
+cat("\n\nThe maximum Fossil fuel energy consumption in Germany : ",max_consumption)
+cat("\nThe minimum Fossil fuel energy consumption in Germany : ",min_consumption)
+cat("\nThe mean of Fossil fuel energy consumption in Germany : ",mean_consumption)
+cat("\nThe median of Fossil fuel energy consumption in Germany : ",median_consumption)
+cat("\nThe varience of Fossil fuel energy consumption in Germany : ",varience_consumption)
+cat("\nThe standard deviation of Fossil fuel energy consumption in Germany : ",sd_consumption)
+cat("\nThe first quantile of Fossil fuel energy consumption in Germany : ",percentiles_consumption[1])
+cat("\nThe third quantile of Fossil fuel energy consumption in Germany : ",percentiles_consumption[2])
+cat("\nThe IQR of Fossil fuel energy consumption in Germany : ",IQR_consumption)
+
+
+#Variable 8 : Heating Degree Days
+Germony_df[,12] <- as.numeric(Germony_df[,12])
+
+max_Heat <- max(Germony_df[5:nrow(Germony_df),12])
+min_Heat <- min(Germony_df[5:nrow(Germony_df),12])
+mean_Heat <- mean(Germony_df[5:nrow(Germony_df),12])
+median_Heat <- median(Germony_df[5:nrow(Germony_df),12])
+varience_Heat <- var(Germony_df[5:nrow(Germony_df),12])
+sd_Heat <- sd(Germony_df[5:nrow(Germony_df),12])
+percentiles_Heat <- quantile(Germony_df[5:nrow(Germony_df),12],c(0.25,0.75))
+IQR_Heat <- IQR(Germony_df[5:nrow(Germony_df),12])
+
+#Print the results
+cat("\n\nThe maximum Heating Degree Days in Germany : ",max_Heat)
+cat("\nThe minimum Heating Degree Days in Germany : ",min_Heat)
+cat("\nThe mean of Heating Degree Days in Germany : ",mean_Heat)
+cat("\nThe median of Heating Degree Days in Germany : ",median_Heat)
+cat("\nThe varience of Heating Degree Days in Germany : ",varience_Heat)
+cat("\nThe standard deviation of Heating Degree Days in Germany : ",sd_Heat)
+cat("\nThe first quantile of Heating Degree Days in Germany : ",percentiles_Heat[1])
+cat("\nThe third quantile of Heating Degree Days in Germany : ",percentiles_Heat[2])
+cat("\nThe IQR of Heating Degree Days in Germany : ",IQR_Heat)
+
+#Variable 9 : Life expectancy at birth, total (years)
+Germony_df[,13] <- as.numeric(Germony_df[,13])
+
+max_expectancy <- max(Germony_df[5:nrow(Germony_df),13])
+min_expectancy <- min(Germony_df[5:nrow(Germony_df),13])
+mean_expectancy <- mean(Germony_df[5:nrow(Germony_df),13])
+median_expectancy <- median(Germony_df[5:nrow(Germony_df),13])
+varience_expectancy <- var(Germony_df[5:nrow(Germony_df),13])
+sd_expectancy <- sd(Germony_df[5:nrow(Germony_df),13])
+percentiles_expectancy <- quantile(Germony_df[5:nrow(Germony_df),13],c(0.25,0.75))
+IQR_expectancy <- IQR(Germony_df[5:nrow(Germony_df),13])
+
+#Print the results
+cat("\n\nThe maximum Life expectancy at birth, total (years) in Germany : ",max_expectancy)
+cat("\nThe minimum Life expectancy at birth, total (years) in Germany : ",min_expectancy)
+cat("\nThe mean of Life expectancy at birth, total (years) in Germany : ",mean_expectancy)
+cat("\nThe median of Life expectancy at birth, total (years) in Germany : ",median_expectancy)
+cat("\nThe varience of Life expectancy at birth, total (years) in Germany : ",varience_expectancy)
+cat("\nThe standard deviation of Life expectancy at birth, total (years) in Germany : ",sd_expectancy)
+cat("\nThe first quantile of Life expectancy at birth, total (years) in Germany : ",percentiles_expectancy[1])
+cat("\nThe third quantile of Life expectancy at birth, total (years) in Germany : ",percentiles_expectancy[2])
+cat("\nThe IQR of Life expectancy at birth, total (years) in Germany : ",IQR_expectancy)
+
+#Variable 10 : Net migration
+Germony_df[,15] <- as.numeric(Germony_df[,15])
+
+max_net_migration <- max(Germony_df[5:nrow(Germony_df),15])
+min_net_migration <- min(Germony_df[5:nrow(Germony_df),15])
+mean_net_migration <- mean(Germony_df[5:nrow(Germony_df),15])
+median_net_migration <- median(Germony_df[5:nrow(Germony_df),15])
+varience_net_migration <- var(Germony_df[5:nrow(Germony_df),15])
+sd_net_migration <- sd(Germony_df[5:nrow(Germony_df),15])
+percentiles_net_migration <- quantile(Germony_df[5:nrow(Germony_df),15],c(0.25,0.75))
+IQR_net_migration <- IQR(Germony_df[5:nrow(Germony_df),15])
+
+#Print the results
+cat("\n\nThe maximum Net migration in Germany : ",max_net_migration)
+cat("\nThe minimum Net migration in Germany : ",min_net_migration)
+cat("\nThe mean of Net migration in Germany : ",mean_net_migration)
+cat("\nThe median of Net migration in Germany : ",median_net_migration)
+cat("\nThe varience of Net migration in Germany : ",varience_net_migration)
+cat("\nThe standard deviation of Net migration in Germany : ",sd_net_migration)
+cat("\nThe first quantile of Net migration in Germany : ",percentiles_net_migration[1])
+cat("\nThe third quantile of Net migration in Germany : ",percentiles_net_migration[2])
+cat("\nThe IQR of Net migration in Germany : ",IQR_net_migration)
+
+#Variable 11 : Population ages 65 and above (% of total population)
+Germony_df[,16] <- as.numeric(Germony_df[,16])
+
+max_pop_proportion <- max(Germony_df[5:nrow(Germony_df),16])
+min_pop_proportion <- min(Germony_df[5:nrow(Germony_df),16])
+mean_pop_proportion <- mean(Germony_df[5:nrow(Germony_df),16])
+median_pop_proportion <- median(Germony_df[5:nrow(Germony_df),16])
+varience_pop_proportion <- var(Germony_df[5:nrow(Germony_df),16])
+sd_pop_proportion <- sd(Germony_df[5:nrow(Germony_df),16])
+percentiles_pop_proportion <- quantile(Germony_df[5:nrow(Germony_df),16],c(0.25,0.75))
+IQR_pop_proportion <- IQR(Germony_df[5:nrow(Germony_df),16])
+
+#Print the results
+cat("\n\nThe maximum Population proportion of ages 65 and above in Germany : ",max_pop_proportion)
+cat("\nThe minimum Population proportion of ages 65 and above in Germany : ",min_pop_proportion)
+cat("\nThe mean of Population proportion of ages 65 and above in Germany : ",mean_pop_proportion)
+cat("\nThe median of Population proportion of ages 65 and above in Germany : ",median_pop_proportion)
+cat("\nThe varience of Population proportion of ages 65 and above in Germany : ",varience_pop_proportion)
+cat("\nThe standard deviation of Population proportion of ages 65 and above in Germany : ",sd_pop_proportion)
+cat("\nThe first quantile of Population proportion of ages 65 and above in Germany : ",percentiles_pop_proportion[1])
+cat("\nThe third quantile of Population proportion of ages 65 and above in Germany : ",percentiles_pop_proportion[2])
+cat("\nThe IQR of Population proportion of ages 65 and above in Germany : ",IQR_pop_proportion)
+
+#Variable 12 : Population density (people per sq. km of land area)
+Germony_df[,17] <- as.numeric(Germony_df[,17])
+
+max_pop_density <- max(Germony_df[5:nrow(Germony_df),17])
+min_pop_density <- min(Germony_df[5:nrow(Germony_df),17])
+mean_pop_density <- mean(Germony_df[5:nrow(Germony_df),17])
+median_pop_density <- median(Germony_df[5:nrow(Germony_df),17])
+varience_pop_density <- var(Germony_df[5:nrow(Germony_df),17])
+sd_pop_density <- sd(Germony_df[5:nrow(Germony_df),17])
+percentiles_pop_density <- quantile(Germony_df[5:nrow(Germony_df),17],c(0.25,0.75))
+IQR_pop_density <- IQR(Germony_df[5:nrow(Germony_df),17])
+
+#Print the results
+cat("\n\nThe maximum Population density in Germany : ",max_pop_density)
+cat("\nThe minimum Population density in Germany : ",min_pop_density)
+cat("\nThe mean of Population density in Germany : ",mean_pop_density)
+cat("\nThe median of Population density in Germany : ",median_pop_density)
+cat("\nThe varience of Population density in Germany : ",varience_pop_density)
+cat("\nThe standard deviation of Population density in Germany : ",sd_pop_density)
+cat("\nThe first quantile of Population density in Germany : ",percentiles_pop_density[1])
+cat("\nThe third quantile of Population density in Germany : ",percentiles_pop_density[2])
+cat("\nThe IQR of Population density in Germany : ",IQR_pop_density)
+
+
+```
+
+```{r : Descriptive statistic for the Spain}
+Spain_df[,1] <- as.numeric(Spain_df[,1])
+
+#Adjusted savings: natural resources depletion (% of GNI)
+max_of_depletion <- max(Spain_df[5:nrow(Spain_df),1])
+min_of_depletion <- min(Spain_df[5:nrow(Spain_df),1])
+mean_of_depletion <- mean(Spain_df[5:nrow(Spain_df),1])
+median_of_depletion <- median(Spain_df[5:nrow(Spain_df),1])
+varience_of_depletion <- var(Spain_df[5:nrow(Spain_df),1])
+sd_of_depletion <- sd(Spain_df[5:nrow(Spain_df),1])
+quantiles_of_depletion <- quantile(Spain_df[5:nrow(Spain_df),1],c(0.25,0.75))
+IQR_of_depletion <- IQR(Spain_df[5:nrow(Spain_df),1])
+
+#Print the results
+cat("\nThe maximum natural resources depletion in Spain : ",max_of_depletion)
+cat("\nThe minimum natural resources depletion in Spain : ",min_of_depletion)
+cat("\nThe mean of the natural resources depletion in Spain : ",mean_of_depletion)
+cat("\nThe median of the natural resources depletion in Spain : ",median_of_depletion)
+cat("\nThe varience of the natural resources depletion in Spain : ",varience_of_depletion)
+cat("\nThe standard deviation of the natural resources depletion in Spain : ",sd_of_depletion)
+cat("\nThe first quantile of the natural resources depletion in Spain : ",quantiles_of_depletion[1])
+cat("\nThe third quantile of the natural resources depletion in Spain : ",quantiles_of_depletion[2])
+cat("\nThe IQR of the natural resources depletion in Spain : ",IQR_of_depletion)
+
+#Variable 2 : Agricultural land (% of land area)
+Spain_df[,3] <- as.numeric(Spain_df[,3])
+
+max_of_land_area <- max(Spain_df[5:nrow(Spain_df),3])
+min_of_land_area <- min(Spain_df[5:nrow(Spain_df),3])
+mean_of_land_area <- mean(Spain_df[5:nrow(Spain_df),3])
+median_of_land_area <- median(Spain_df[5:nrow(Spain_df),3])
+varience_of_land_area <- var(Spain_df[5:nrow(Spain_df),3])
+sd_of_land_area <- sd(Spain_df[5:nrow(Spain_df),3])
+percentiles_of_land_area <- quantile(Spain_df[5:nrow(Spain_df),3],c(0.25,0.75))
+IQR_of_land_area <- IQR(Spain_df[5:nrow(Spain_df),3])
+
+#Print the results
+cat("\n\nThe maximum agricultural land area in Spain : ",max_of_land_area)
+cat("\nThe minimum agricultural land area in Spain : ",min_of_land_area)
+cat("\nThe mean of the agricultural land area in Spain : ",mean_of_land_area)
+cat("\nThe median of the agricultural land area in Spain : ",median_of_land_area)
+cat("\nThe varience of the agricultural land area in Spain : ",varience_of_land_area)
+cat("\nThe standard deviation of the agricultural land area in Spain : ",sd_of_land_area)
+cat("\nThe first quantile of the agricultural land area in Spain : ",percentiles_of_land_area[1])
+cat("\nThe third quantile of the agricultural land area in Spain : ",percentiles_of_land_area[2])
+cat("\nThe IQR of the agricultural land area in Spain : ",IQR_of_land_area)
+
+#Variable 3 : Cooling Degree Days
+Spain_df[,4] <- as.numeric(Spain_df[,4])
+
+max_of_degrees <- max(Spain_df[5:nrow(Spain_df),4])
+min_of_degrees <- min(Spain_df[5:nrow(Spain_df),4])
+mean_of_degrees <- mean(Spain_df[5:nrow(Spain_df),4])
+median_of_degrees <- median(Spain_df[5:nrow(Spain_df),4])
+varience_of_degrees <- var(Spain_df[5:nrow(Spain_df),4])
+sd_of_degrees <- sd(Spain_df[5:nrow(Spain_df),4])
+percentiles_of_degrees <- quantile(Spain_df[5:nrow(Spain_df),4],c(0.25,0.75))
+IQR_of_degrees <- IQR(Spain_df[5:nrow(Spain_df),4])
+
+#Print the results
+cat("\n\nThe maximum Cooling Degree Days in Spain : ",max_of_degrees)
+cat("\nThe minimum Cooling Degree Days in Spain : ",min_of_degrees)
+cat("\nThe mean of the Cooling Degree Days in Spain : ",mean_of_degrees)
+cat("\nThe median of the Cooling Degree Days in Spain : ",median_of_degrees)
+cat("\nThe varience of the Cooling Degree Days in Spain : ",varience_of_degrees)
+cat("\nThe standard deviation of the Cooling Degree Days in Spain : ",sd_of_degrees)
+cat("\nThe first quantile of the Cooling Degree Days in Spain : ",percentiles_of_degrees[1])
+cat("\nThe third quantile of the Cooling Degree Days in Spain : ",percentiles_of_degrees[2])
+cat("\nThe IQR of the Cooling Degree Days in Spain : ",IQR_of_degrees)
+
+
+#Variable 4 : Energy use (kg of oil equivalent per capita)
+Spain_df[,7] <- as.numeric(Spain_df[,7])
+
+max_kg_of_oil <- max(Spain_df[5:nrow(Spain_df),7])
+min_kg_of_oil <- min(Spain_df[5:nrow(Spain_df),7])
+mean_kg_of_oil <- mean(Spain_df[5:nrow(Spain_df),7])
+median_kg_of_oil <- median(Spain_df[5:nrow(Spain_df),7])
+varience_kg_of_oil <- var(Spain_df[5:nrow(Spain_df),7])
+sd_kg_of_oil <- sd(Spain_df[5:nrow(Spain_df),7])
+percentiles_kg_of_oil <- quantile(Spain_df[5:nrow(Spain_df),7],c(0.25,0.75))
+IQR_kg_of_oil <- IQR(Spain_df[5:nrow(Spain_df),7])
+
+#Print the results
+cat("\n\nThe maximum Energy use in Spain : ",max_kg_of_oil)
+cat("\nThe minimum Energy use in Spain : ",min_kg_of_oil)
+cat("\nThe mean of Energy use in Spain : ",mean_kg_of_oil)
+cat("\nThe median of Energy use in Spain : ",median_kg_of_oil)
+cat("\nThe varience of Energy use in Spain : ",varience_kg_of_oil)
+cat("\nThe standard deviation of Energy use in Spain : ",sd_kg_of_oil)
+cat("\nThe first quantile of Energy use in Spain : ",percentiles_kg_of_oil[1])
+cat("\nThe third quantile of Energy use in Spain : ",percentiles_kg_of_oil[2])
+cat("\nThe IQR of Energy use in Spain : ",IQR_kg_of_oil)
+
+
+#Variable 5 : Fertility rate, total (births per woman)
+Spain_df[,8] <- as.numeric(Spain_df[,8])
+
+max_Fertility_rate <- max(Spain_df[5:nrow(Spain_df),8])
+min_Fertility_rate <- min(Spain_df[5:nrow(Spain_df),8])
+mean_Fertility_rate <- mean(Spain_df[5:nrow(Spain_df),8])
+median_Fertility_rate <- median(Spain_df[5:nrow(Spain_df),8])
+varience_Fertility_rate <- var(Spain_df[5:nrow(Spain_df),8])
+sd_Fertility_rate <- sd(Spain_df[5:nrow(Spain_df),8])
+percentiles_Fertility_rate <- quantile(Spain_df[5:nrow(Spain_df),8],c(0.25,0.75))
+IQR_Fertility_rate <- IQR(Spain_df[5:nrow(Spain_df),8])
+
+#Print the results
+cat("\n\nThe maximum Fertility rate in Spain : ",max_Fertility_rate)
+cat("\nThe minimum Fertility rate in Spain : ",min_Fertility_rate)
+cat("\nThe mean of Fertility rate in Spain : ",mean_Fertility_rate)
+cat("\nThe median of Fertility rate in Spain : ",median_Fertility_rate)
+cat("\nThe varience of Fertility rate in Spain : ",varience_Fertility_rate)
+cat("\nThe standard deviation of Fertility rate in Spain : ",sd_Fertility_rate)
+cat("\nThe first quantile of Fertility rate in Spain : ",percentiles_Fertility_rate[1])
+cat("\nThe third quantile of Fertility rate in Spain : ",percentiles_Fertility_rate[2])
+cat("\nThe IQR of Fertility rate in Spain : ",IQR_Fertility_rate)
+
+
+#Variable 6 : Food production index (2014-2016 = 100)
+Spain_df[,9] <- as.numeric(Spain_df[,9])
+
+max_index <- max(Spain_df[5:nrow(Spain_df),9])
+min_index <- min(Spain_df[5:nrow(Spain_df),9])
+mean_index <- mean(Spain_df[5:nrow(Spain_df),9])
+median_index <- median(Spain_df[5:nrow(Spain_df),9])
+varience_index <- var(Spain_df[5:nrow(Spain_df),9])
+sd_index <- sd(Spain_df[5:nrow(Spain_df),9])
+percentiles_index <- quantile(Spain_df[5:nrow(Spain_df),9],c(0.25,0.75))
+IQR_index <- IQR(Spain_df[5:nrow(Spain_df),9])
+
+#Print the results
+cat("\n\nThe maximum Food production index in Spain : ",max_index)
+cat("\nThe minimum Food production index in Spain : ",min_index)
+cat("\nThe mean of Food production index in Spain : ",mean_index)
+cat("\nThe median of Food production index in Spain : ",median_index)
+cat("\nThe varience of Food production index in Spain : ",varience_index)
+cat("\nThe standard deviation of Food production index in Spain : ",sd_index)
+cat("\nThe first quantile of Food production index in Spain : ",percentiles_index[1])
+cat("\nThe third quantile of Food production index in Spain : ",percentiles_index[2])
+cat("\nThe IQR of Food production index in Spain : ",IQR_index)
+
+
+#Variable 7 : Fossil fuel energy consumption (% of total)
+Spain_df[,10] <- as.numeric(Spain_df[,10])
+
+max_consumption <- max(Spain_df[5:nrow(Spain_df),10])
+min_consumption <- min(Spain_df[5:nrow(Spain_df),10])
+mean_consumption <- mean(Spain_df[5:nrow(Spain_df),10])
+median_consumption <- median(Spain_df[5:nrow(Spain_df),10])
+varience_consumption <- var(Spain_df[5:nrow(Spain_df),10])
+sd_consumption <- sd(Spain_df[5:nrow(Spain_df),10])
+percentiles_consumption <- quantile(Spain_df[5:nrow(Spain_df),10],c(0.25,0.75))
+IQR_consumption <- IQR(Spain_df[5:nrow(Spain_df),10])
+
+#Print the results
+cat("\n\nThe maximum Fossil fuel energy consumption in Spain : ",max_consumption)
+cat("\nThe minimum Fossil fuel energy consumption in Spain : ",min_consumption)
+cat("\nThe mean of Fossil fuel energy consumption in Spain : ",mean_consumption)
+cat("\nThe median of Fossil fuel energy consumption in Spain : ",median_consumption)
+cat("\nThe varience of Fossil fuel energy consumption in Spain : ",varience_consumption)
+cat("\nThe standard deviation of Fossil fuel energy consumption in Spain : ",sd_consumption)
+cat("\nThe first quantile of Fossil fuel energy consumption in Spain : ",percentiles_consumption[1])
+cat("\nThe third quantile of Fossil fuel energy consumption in Spain : ",percentiles_consumption[2])
+cat("\nThe IQR of Fossil fuel energy consumption in Spain : ",IQR_consumption)
+
+
+#Variable 8 : Heating Degree Days
+Spain_df[,13] <- as.numeric(Spain_df[,13])
+
+max_Heat <- max(Spain_df[5:nrow(Spain_df),13])
+min_Heat <- min(Spain_df[5:nrow(Spain_df),13])
+mean_Heat <- mean(Spain_df[5:nrow(Spain_df),13])
+median_Heat <- median(Spain_df[5:nrow(Spain_df),13])
+varience_Heat <- var(Spain_df[5:nrow(Spain_df),13])
+sd_Heat <- sd(Spain_df[5:nrow(Spain_df),13])
+percentiles_Heat <- quantile(Spain_df[5:nrow(Spain_df),13],c(0.25,0.75))
+IQR_Heat <- IQR(Spain_df[5:nrow(Spain_df),13])
+
+#Print the results
+cat("\n\nThe maximum Heating Degree Days in Spain : ",max_Heat)
+cat("\nThe minimum Heating Degree Days in Spain : ",min_Heat)
+cat("\nThe mean of Heating Degree Days in Spain : ",mean_Heat)
+cat("\nThe median of Heating Degree Days in Spain : ",median_Heat)
+cat("\nThe varience of Heating Degree Days in Spain : ",varience_Heat)
+cat("\nThe standard deviation of Heating Degree Days in Spain : ",sd_Heat)
+cat("\nThe first quantile of Heating Degree Days in Spain : ",percentiles_Heat[1])
+cat("\nThe third quantile of Heating Degree Days in Spain : ",percentiles_Heat[2])
+cat("\nThe IQR of Heating Degree Days in Spain : ",IQR_Heat)
+
+
+#Variable 9 : Life expectancy at birth, total (years)
+Spain_df[,14] <- as.numeric(Spain_df[,14])
+
+max_expectancy <- max(Spain_df[5:nrow(Spain_df),14])
+min_expectancy <- min(Spain_df[5:nrow(Spain_df),14])
+mean_expectancy <- mean(Spain_df[5:nrow(Spain_df),14])
+median_expectancy <- median(Spain_df[5:nrow(Spain_df),14])
+varience_expectancy <- var(Spain_df[5:nrow(Spain_df),14])
+sd_expectancy <- sd(Spain_df[5:nrow(Spain_df),14])
+percentiles_expectancy <- quantile(Spain_df[5:nrow(Spain_df),14],c(0.25,0.75))
+IQR_expectancy <- IQR(Spain_df[5:nrow(Spain_df),14])
+
+#Print the results
+cat("\n\nThe maximum Life expectancy at birth, total (years) in Spain : ",max_expectancy)
+cat("\nThe minimum Life expectancy at birth, total (years) in Spain : ",min_expectancy)
+cat("\nThe mean of Life expectancy at birth, total (years) in Spain : ",mean_expectancy)
+cat("\nThe median of Life expectancy at birth, total (years) in Spain : ",median_expectancy)
+cat("\nThe varience of Life expectancy at birth, total (years) in Spain : ",varience_expectancy)
+cat("\nThe standard deviation of Life expectancy at birth, total (years) in Spain : ",sd_expectancy)
+cat("\nThe first quantile of Life expectancy at birth, total (years) in Spain : ",percentiles_expectancy[1])
+cat("\nThe third quantile of Life expectancy at birth, total (years) in Spain : ",percentiles_expectancy[2])
+cat("\nThe IQR of Life expectancy at birth, total (years) in Spain : ",IQR_expectancy)
+
+
+#Variable 10 : Net migration
+Spain_df[,16] <- as.numeric(Spain_df[,16])
+
+max_net_migration <- max(Spain_df[5:nrow(Spain_df),16])
+min_net_migration <- min(Spain_df[5:nrow(Spain_df),16])
+mean_net_migration <- mean(Spain_df[5:nrow(Spain_df),16])
+median_net_migration <- median(Spain_df[5:nrow(Spain_df),16])
+varience_net_migration <- var(Spain_df[5:nrow(Spain_df),16])
+sd_net_migration <- sd(Spain_df[5:nrow(Spain_df),16])
+percentiles_net_migration <- quantile(Spain_df[5:nrow(Spain_df),16],c(0.25,0.75))
+IQR_net_migration <- IQR(Spain_df[5:nrow(Spain_df),16])
+
+#Print the results
+cat("\n\nThe maximum Net migration in Spain : ",max_net_migration)
+cat("\nThe minimum Net migration in Spain : ",min_net_migration)
+cat("\nThe mean of Net migration in Spain : ",mean_net_migration)
+cat("\nThe median of Net migration in Spain : ",median_net_migration)
+cat("\nThe varience of Net migration in Spain : ",varience_net_migration)
+cat("\nThe standard deviation of Net migration in Spain : ",sd_net_migration)
+cat("\nThe first quantile of Net migration in Spain : ",percentiles_net_migration[1])
+cat("\nThe third quantile of Net migration in Spain : ",percentiles_net_migration[2])
+cat("\nThe IQR of Net migration in Spain : ",IQR_net_migration)
+
+#Variable 11 : Population ages 65 and above (% of total population)
+Spain_df[,17] <- as.numeric(Spain_df[,17])
+
+max_pop_proportion <- max(Spain_df[5:nrow(Spain_df),17])
+min_pop_proportion <- min(Spain_df[5:nrow(Spain_df),17])
+mean_pop_proportion <- mean(Spain_df[5:nrow(Spain_df),17])
+median_pop_proportion <- median(Spain_df[5:nrow(Spain_df),17])
+varience_pop_proportion <- var(Spain_df[5:nrow(Spain_df),17])
+sd_pop_proportion <- sd(Spain_df[5:nrow(Spain_df),17])
+percentiles_pop_proportion <- quantile(Spain_df[5:nrow(Spain_df),17],c(0.25,0.75))
+IQR_pop_proportion <- IQR(Spain_df[5:nrow(Spain_df),17])
+
+#Print the results
+cat("\n\nThe maximum Population proportion of ages 65 and above in Spain : ",max_pop_proportion)
+cat("\nThe minimum Population proportion of ages 65 and above in Spain : ",min_pop_proportion)
+cat("\nThe mean of Population proportion of ages 65 and above in Spain : ",mean_pop_proportion)
+cat("\nThe median of Population proportion of ages 65 and above in Spain : ",median_pop_proportion)
+cat("\nThe varience of Population proportion of ages 65 and above in Spain : ",varience_pop_proportion)
+cat("\nThe standard deviation of Population proportion of ages 65 and above in Spain : ",sd_pop_proportion)
+cat("\nThe first quantile of Population proportion of ages 65 and above in Spain : ",percentiles_pop_proportion[1])
+cat("\nThe third quantile of Population proportion of ages 65 and above in Spain : ",percentiles_pop_proportion[2])
+cat("\nThe IQR of Population proportion of ages 65 and above in Spain : ",IQR_pop_proportion)
+
+#Variable 12 : Population density (people per sq. km of land area)
+Spain_df[,18] <- as.numeric(Spain_df[,18])
+
+max_pop_density <- max(Spain_df[5:nrow(Spain_df),18])
+min_pop_density <- min(Spain_df[5:nrow(Spain_df),18])
+mean_pop_density <- mean(Spain_df[5:nrow(Spain_df),18])
+median_pop_density <- median(Spain_df[5:nrow(Spain_df),18])
+varience_pop_density <- var(Spain_df[5:nrow(Spain_df),18])
+sd_pop_density <- sd(Spain_df[5:nrow(Spain_df),18])
+percentiles_pop_density <- quantile(Spain_df[5:nrow(Spain_df),18],c(0.25,0.75))
+IQR_pop_density <- IQR(Spain_df[5:nrow(Spain_df),18])
+
+#Print the results
+cat("\n\nThe maximum Population density in Spain : ",max_pop_density)
+cat("\nThe minimum Population density in Spain : ",min_pop_density)
+cat("\nThe mean of Population density in Spain : ",mean_pop_density)
+cat("\nThe median of Population density in Spain : ",median_pop_density)
+cat("\nThe varience of Population density in Spain : ",varience_pop_density)
+cat("\nThe standard deviation of Population density in Spain : ",sd_pop_density)
+cat("\nThe first quantile of Population density in Spain : ",percentiles_pop_density[1])
+cat("\nThe third quantile of Population density in Spain : ",percentiles_pop_density[2])
+cat("\nThe IQR of Population density in Spain : ",IQR_pop_density)
+```
+
+```{r : Descriptive statistic for the United Kingdom }
+UK_df[,1] <- as.numeric(UK_df[,1])
+#Adjusted savings: natural resources depletion (% of GNI)
+max_of_depletion <- max(UK_df[5:nrow(UK_df),1])
+min_of_depletion <- min(UK_df[5:nrow(UK_df),1])
+mean_of_depletion <- mean(UK_df[5:nrow(UK_df),1])
+median_of_depletion <- median(UK_df[5:nrow(UK_df),1])
+varience_of_depletion <- var(UK_df[5:nrow(UK_df),1])
+sd_of_depletion <- sd(UK_df[5:nrow(UK_df),1])
+quantiles_of_depletion <- quantile(UK_df[5:nrow(UK_df),1],c(0.25,0.75))
+IQR_of_depletion <- IQR(Spain_df[5:nrow(UK_df),1])
+
+#Print the results
+cat("\nThe maximum natural resources depletion in UK : ",max_of_depletion)
+cat("\nThe minimum natural resources depletion in UK : ",min_of_depletion)
+cat("\nThe mean of the natural resources depletion in UK : ",mean_of_depletion)
+cat("\nThe median of the natural resources depletion in UK : ",median_of_depletion)
+cat("\nThe varience of the natural resources depletion in UK : ",varience_of_depletion)
+cat("\nThe standard deviation of the natural resources depletion in UK : ",sd_of_depletion)
+cat("\nThe first quantile of the natural resources depletion in UK : ",quantiles_of_depletion[1])
+cat("\nThe third quantile of the natural resources depletion in UK : ",quantiles_of_depletion[2])
+cat("\nThe IQR of the natural resources depletion in UK : ",IQR_of_depletion)
+
+
+#Variable 2 : Agricultural land (% of land area)
+UK_df[,3] <- as.numeric(UK_df[,3])
+
+max_of_land_area <- max(UK_df[5:nrow(UK_df),3])
+min_of_land_area <- min(UK_df[5:nrow(UK_df),3])
+mean_of_land_area <- mean(UK_df[5:nrow(UK_df),3])
+median_of_land_area <- median(UK_df[5:nrow(UK_df),3])
+varience_of_land_area <- var(UK_df[5:nrow(UK_df),3])
+sd_of_land_area <- sd(UK_df[5:nrow(UK_df),3])
+percentiles_of_land_area <- quantile(UK_df[5:nrow(UK_df),3],c(0.25,0.75))
+IQR_of_land_area <- IQR(UK_df[5:nrow(UK_df),3])
+
+#Print the results
+cat("\n\nThe maximum agricultural land area in UK : ",max_of_land_area)
+cat("\nThe minimum agricultural land area in UK : ",min_of_land_area)
+cat("\nThe mean of the agricultural land area in UK : ",mean_of_land_area)
+cat("\nThe median of the agricultural land area in UK : ",median_of_land_area)
+cat("\nThe varience of the agricultural land area in UK : ",varience_of_land_area)
+cat("\nThe standard deviation of the agricultural land area in UK : ",sd_of_land_area)
+cat("\nThe first quantile of the agricultural land area in UK : ",percentiles_of_land_area[1])
+cat("\nThe third quantile of the agricultural land area in UK : ",percentiles_of_land_area[2])
+cat("\nThe IQR of the agricultural land area in UK : ",IQR_of_land_area)
+
+#Variable 3 : Cooling Degree Days
+UK_df[,4] <- as.numeric(UK_df[,4])
+
+max_of_degrees <- max(UK_df[5:nrow(UK_df),4])
+min_of_degrees <- min(UK_df[5:nrow(UK_df),4])
+mean_of_degrees <- mean(UK_df[5:nrow(UK_df),4])
+median_of_degrees <- median(UK_df[5:nrow(UK_df),4])
+varience_of_degrees <- var(UK_df[5:nrow(UK_df),4])
+sd_of_degrees <- sd(UK_df[5:nrow(UK_df),4])
+percentiles_of_degrees <- quantile(UK_df[5:nrow(UK_df),4],c(0.25,0.75))
+IQR_of_degrees <- IQR(UK_df[5:nrow(UK_df),4])
+
+#Print the results
+cat("\n\nThe maximum Cooling Degree Days in UK : ",max_of_degrees)
+cat("\nThe minimum Cooling Degree Days in UK : ",min_of_degrees)
+cat("\nThe mean of the Cooling Degree Days in UK : ",mean_of_degrees)
+cat("\nThe median of the Cooling Degree Days in UK : ",median_of_degrees)
+cat("\nThe varience of the Cooling Degree Days in UK : ",varience_of_degrees)
+cat("\nThe standard deviation of the Cooling Degree Days in UK : ",sd_of_degrees)
+cat("\nThe first quantile of the Cooling Degree Days in UK : ",percentiles_of_degrees[1])
+cat("\nThe third quantile of the Cooling Degree Days in UK : ",percentiles_of_degrees[2])
+cat("\nThe IQR of the Cooling Degree Days in UK : ",IQR_of_degrees)
+
+
+#Variable 4 : Energy use (kg of oil equivalent per capita)
+UK_df[,7] <- as.numeric(UK_df[,7])
+
+max_kg_of_oil <- max(UK_df[5:nrow(UK_df),7])
+min_kg_of_oil <- min(UK_df[5:nrow(UK_df),7])
+mean_kg_of_oil <- mean(UK_df[5:nrow(UK_df),7])
+median_kg_of_oil <- median(UK_df[5:nrow(UK_df),7])
+varience_kg_of_oil <- var(UK_df[5:nrow(UK_df),7])
+sd_kg_of_oil <- sd(UK_df[5:nrow(UK_df),7])
+percentiles_kg_of_oil <- quantile(UK_df[5:nrow(UK_df),7],c(0.25,0.75))
+IQR_kg_of_oil <- IQR(UK_df[5:nrow(UK_df),7])
+
+#Print the results
+cat("\n\nThe maximum Energy use in UK : ",max_kg_of_oil)
+cat("\nThe minimum Energy use in UK : ",min_kg_of_oil)
+cat("\nThe mean of Energy use in UK : ",mean_kg_of_oil)
+cat("\nThe median of Energy use in UK : ",median_kg_of_oil)
+cat("\nThe varience of Energy use in UK : ",varience_kg_of_oil)
+cat("\nThe standard deviation of Energy use in UK : ",sd_kg_of_oil)
+cat("\nThe first quantile of Energy use in UK : ",percentiles_kg_of_oil[1])
+cat("\nThe third quantile of Energy use in UK : ",percentiles_kg_of_oil[2])
+cat("\nThe IQR of Energy use in UK : ",IQR_kg_of_oil)
+
+
+#Variable 5 : Fertility rate, total (births per woman)
+UK_df[,8] <- as.numeric(UK_df[,8])
+
+max_Fertility_rate <- max(UK_df[5:nrow(UK_df),8])
+min_Fertility_rate <- min(UK_df[5:nrow(UK_df),8])
+mean_Fertility_rate <- mean(UK_df[5:nrow(UK_df),8])
+median_Fertility_rate <- median(UK_df[5:nrow(UK_df),8])
+varience_Fertility_rate <- var(UK_df[5:nrow(UK_df),8])
+sd_Fertility_rate <- sd(UK_df[5:nrow(UK_df),8])
+percentiles_Fertility_rate <- quantile(UK_df[5:nrow(UK_df),8],c(0.25,0.75))
+IQR_Fertility_rate <- IQR(UK_df[5:nrow(UK_df),8])
+
+#Print the results
+cat("\n\nThe maximum Fertility rate in UK : ",max_Fertility_rate)
+cat("\nThe minimum Fertility rate in UK : ",min_Fertility_rate)
+cat("\nThe mean of Fertility rate in UK : ",mean_Fertility_rate)
+cat("\nThe median of Fertility rate in UK : ",median_Fertility_rate)
+cat("\nThe varience of Fertility rate in UK : ",varience_Fertility_rate)
+cat("\nThe standard deviation of Fertility rate in UK : ",sd_Fertility_rate)
+cat("\nThe first quantile of Fertility rate in UK : ",percentiles_Fertility_rate[1])
+cat("\nThe third quantile of Fertility rate in UK : ",percentiles_Fertility_rate[2])
+cat("\nThe IQR of Fertility rate in UK : ",IQR_Fertility_rate)
+
+
+#Variable 6 : Food production index (2014-2016 = 100)
+UK_df[,9] <- as.numeric(UK_df[,9])
+
+max_index <- max(UK_df[5:nrow(UK_df),9])
+min_index <- min(UK_df[5:nrow(UK_df),9])
+mean_index <- mean(UK_df[5:nrow(UK_df),9])
+median_index <- median(UK_df[5:nrow(UK_df),9])
+varience_index <- var(UK_df[5:nrow(UK_df),9])
+sd_index <- sd(UK_df[5:nrow(UK_df),9])
+percentiles_index <- quantile(UK_df[5:nrow(UK_df),9],c(0.25,0.75))
+IQR_index <- IQR(UK_df[5:nrow(UK_df),9])
+
+#Print the results
+cat("\n\nThe maximum Food production index in UK : ",max_index)
+cat("\nThe minimum Food production index in UK : ",min_index)
+cat("\nThe mean of Food production index in UK : ",mean_index)
+cat("\nThe median of Food production index in UK : ",median_index)
+cat("\nThe varience of Food production index in UK : ",varience_index)
+cat("\nThe standard deviation of Food production index in UK : ",sd_index)
+cat("\nThe first quantile of Food production index in UK : ",percentiles_index[1])
+cat("\nThe third quantile of Food production index in UK : ",percentiles_index[2])
+cat("\nThe IQR of Food production index in UK : ",IQR_index)
+
+
+#Variable 7 : Fossil fuel energy consumption (% of total)
+UK_df[,10] <- as.numeric(UK_df[,10])
+
+max_consumption <- max(UK_df[5:nrow(UK_df),10])
+min_consumption <- min(UK_df[5:nrow(UK_df),10])
+mean_consumption <- mean(UK_df[5:nrow(UK_df),10])
+median_consumption <- median(UK_df[5:nrow(UK_df),10])
+varience_consumption <- var(UK_df[5:nrow(UK_df),10])
+sd_consumption <- sd(UK_df[5:nrow(UK_df),10])
+percentiles_consumption <- quantile(UK_df[5:nrow(UK_df),10],c(0.25,0.75))
+IQR_consumption <- IQR(UK_df[5:nrow(UK_df),10])
+
+#Print the results
+cat("\n\nThe maximum Fossil fuel energy consumption in UK : ",max_consumption)
+cat("\nThe minimum Fossil fuel energy consumption in UK : ",min_consumption)
+cat("\nThe mean of Fossil fuel energy consumption in UK : ",mean_consumption)
+cat("\nThe median of Fossil fuel energy consumption in UK : ",median_consumption)
+cat("\nThe varience of Fossil fuel energy consumption in UK : ",varience_consumption)
+cat("\nThe standard deviation of Fossil fuel energy consumption in UK : ",sd_consumption)
+cat("\nThe first quantile of Fossil fuel energy consumption in UK : ",percentiles_consumption[1])
+cat("\nThe third quantile of Fossil fuel energy consumption in UK : ",percentiles_consumption[2])
+cat("\nThe IQR of Fossil fuel energy consumption in UK : ",IQR_consumption)
+
+
+#Variable 8 : Heating Degree Days
+UK_df[,14] <- as.numeric(UK_df[,14])
+
+max_Heat <- max(UK_df[5:nrow(UK_df),14])
+min_Heat <- min(UK_df[5:nrow(UK_df),14])
+mean_Heat <- mean(UK_df[5:nrow(UK_df),14])
+median_Heat <- median(UK_df[5:nrow(UK_df),14])
+varience_Heat <- var(UK_df[5:nrow(UK_df),14])
+sd_Heat <- sd(UK_df[5:nrow(UK_df),14])
+percentiles_Heat <- quantile(UK_df[5:nrow(UK_df),14],c(0.25,0.75))
+IQR_Heat <- IQR(UK_df[5:nrow(UK_df),14])
+
+#Print the results
+cat("\n\nThe maximum Heating Degree Days in UK : ",max_Heat)
+cat("\nThe minimum Heating Degree Days in UK : ",min_Heat)
+cat("\nThe mean of Heating Degree Days in UK : ",mean_Heat)
+cat("\nThe median of Heating Degree Days in UK : ",median_Heat)
+cat("\nThe varience of Heating Degree Days in UK : ",varience_Heat)
+cat("\nThe standard deviation of Heating Degree Days in UK : ",sd_Heat)
+cat("\nThe first quantile of Heating Degree Days in UK : ",percentiles_Heat[1])
+cat("\nThe third quantile of Heating Degree Days in UK : ",percentiles_Heat[2])
+cat("\nThe IQR of Heating Degree Days in UK : ",IQR_Heat)
+
+
+#Variable 9 : Life expectancy at birth, total (years)
+UK_df[,16] <- as.numeric(UK_df[,16])
+
+max_expectancy <- max(UK_df[5:nrow(UK_df),16])
+min_expectancy <- min(UK_df[5:nrow(UK_df),16])
+mean_expectancy <- mean(UK_df[5:nrow(UK_df),16])
+median_expectancy <- median(UK_df[5:nrow(UK_df),16])
+varience_expectancy <- var(UK_df[5:nrow(UK_df),16])
+sd_expectancy <- sd(UK_df[5:nrow(UK_df),16])
+percentiles_expectancy <- quantile(UK_df[5:nrow(UK_df),16],c(0.25,0.75))
+IQR_expectancy <- IQR(UK_df[5:nrow(UK_df),16])
+
+#Print the results
+cat("\n\nThe maximum Life expectancy at birth, total (years) in UK : ",max_expectancy)
+cat("\nThe minimum Life expectancy at birth, total (years) in UK : ",min_expectancy)
+cat("\nThe mean of Life expectancy at birth, total (years) in UK : ",mean_expectancy)
+cat("\nThe median of Life expectancy at birth, total (years) in UK : ",median_expectancy)
+cat("\nThe varience of Life expectancy at birth, total (years) in UK : ",varience_expectancy)
+cat("\nThe standard deviation of Life expectancy at birth, total (years) in UK : ",sd_expectancy)
+cat("\nThe first quantile of Life expectancy at birth, total (years) in UK : ",percentiles_expectancy[1])
+cat("\nThe third quantile of Life expectancy at birth, total (years) in UK : ",percentiles_expectancy[2])
+cat("\nThe IQR of Life expectancy at birth, total (years) in UK : ",IQR_expectancy)
+
+
+#Variable 10 : Net migration
+UK_df[,18] <- as.numeric(UK_df[,18])
+
+max_net_migration <- max(UK_df[5:nrow(UK_df),18])
+min_net_migration <- min(UK_df[5:nrow(UK_df),18])
+mean_net_migration <- mean(UK_df[5:nrow(UK_df),18])
+median_net_migration <- median(UK_df[5:nrow(UK_df),18])
+varience_net_migration <- var(UK_df[5:nrow(UK_df),18])
+sd_net_migration <- sd(UK_df[5:nrow(UK_df),18])
+percentiles_net_migration <- quantile(UK_df[5:nrow(UK_df),18],c(0.25,0.75))
+IQR_net_migration <- IQR(UK_df[5:nrow(UK_df),18])
+
+#Print the results
+cat("\n\nThe maximum Net migration in UK : ",max_net_migration)
+cat("\nThe minimum Net migration in UK : ",min_net_migration)
+cat("\nThe mean of Net migration in UK : ",mean_net_migration)
+cat("\nThe median of Net migration in UK : ",median_net_migration)
+cat("\nThe varience of Net migration in UK : ",varience_net_migration)
+cat("\nThe standard deviation of Net migration in UK : ",sd_net_migration)
+cat("\nThe first quantile of Net migration in UK : ",percentiles_net_migration[1])
+cat("\nThe third quantile of Net migration in UK : ",percentiles_net_migration[2])
+cat("\nThe IQR of Net migration in UK : ",IQR_net_migration)
+
+#Variable 11 : Population ages 65 and above (% of total population)
+UK_df[,19] <- as.numeric(UK_df[,19])
+
+max_pop_proportion <- max(UK_df[5:nrow(UK_df),19])
+min_pop_proportion <- min(UK_df[5:nrow(UK_df),19])
+mean_pop_proportion <- mean(UK_df[5:nrow(UK_df),19])
+median_pop_proportion <- median(UK_df[5:nrow(UK_df),19])
+varience_pop_proportion <- var(UK_df[5:nrow(UK_df),19])
+sd_pop_proportion <- sd(UK_df[5:nrow(UK_df),19])
+percentiles_pop_proportion <- quantile(UK_df[5:nrow(UK_df),19],c(0.25,0.75))
+IQR_pop_proportion <- IQR(UK_df[5:nrow(UK_df),19])
+
+#Print the results
+cat("\n\nThe maximum Population proportion of ages 65 and above in UK : ",max_pop_proportion)
+cat("\nThe minimum Population proportion of ages 65 and above in UK : ",min_pop_proportion)
+cat("\nThe mean of Population proportion of ages 65 and above in UK : ",mean_pop_proportion)
+cat("\nThe median of Population proportion of ages 65 and above in UK : ",median_pop_proportion)
+cat("\nThe varience of Population proportion of ages 65 and above in UK : ",varience_pop_proportion)
+cat("\nThe standard deviation of Population proportion of ages 65 and above in UK : ",sd_pop_proportion)
+cat("\nThe first quantile of Population proportion of ages 65 and above in UK : ",percentiles_pop_proportion[1])
+cat("\nThe third quantile of Population proportion of ages 65 and above in UK : ",percentiles_pop_proportion[2])
+cat("\nThe IQR of Population proportion of ages 65 and above in UK : ",IQR_pop_proportion)
+
+#Variable 12 : Population density (people per sq. km of land area)
+UK_df[,20] <- as.numeric(UK_df[,20])
+
+max_pop_density <- max(UK_df[5:nrow(UK_df),20])
+min_pop_density <- min(UK_df[5:nrow(UK_df),20])
+mean_pop_density <- mean(UK_df[5:nrow(UK_df),20])
+median_pop_density <- median(UK_df[5:nrow(UK_df),20])
+varience_pop_density <- var(UK_df[5:nrow(UK_df),20])
+sd_pop_density <- sd(UK_df[5:nrow(UK_df),20])
+percentiles_pop_density <- quantile(UK_df[5:nrow(UK_df),20],c(0.25,0.75))
+IQR_pop_density <- IQR(UK_df[5:nrow(UK_df),20])
+
+#Print the results
+cat("\n\nThe maximum Population density in UK : ",max_pop_density)
+cat("\nThe minimum Population density in UK : ",min_pop_density)
+cat("\nThe mean of Population density in UK : ",mean_pop_density)
+cat("\nThe median of Population density in UK : ",median_pop_density)
+cat("\nThe varience of Population density in UK : ",varience_pop_density)
+cat("\nThe standard deviation of Population density in UK : ",sd_pop_density)
+cat("\nThe first quantile of Population density in UK : ",percentiles_pop_density[1])
+cat("\nThe third quantile of Population density in UK : ",percentiles_pop_density[2])
+cat("\nThe IQR of Population density in UK : ",IQR_pop_density)
+```
+
+```{r}
+#Histogram for the Adjusted savings: natural resources depletion (NY.ADJ.DRES.GN.ZS)(% of GNI)  
+hist(Germony_df$X3,main = "Histogram for the natural resources depletion in Germany",xlab = "Natural resources depletion")
+hist(Spain_df$X73,main = "Histogram for the natural resources depletion in Spain",xlab = "Natural resources depletion")
+hist(UK_df$X144,main = "Histogram for the natural resources depletion in UK",xlab = "Natural resources depletion")
+```
+
+
+```{r}
+#Box plot for the Agricultural land (AG.LND.AGRI.ZS)(% of land area)
+boxplot(Germony_df$X4,main = "Box plot for the Agricultural land(% of land area) in Germany")
+boxplot(Spain_df$X75,main = "Box plot for the Agricultural land(% of land area) in Spain")
+boxplot(UK_df$X146,main = "Box plot for the Agricultural land(% of land area) in UK")
+```
+
+
+```{r}
+#Line plot for Cooling Degree Days(EN.CLC.CDDY.XD)
+plot(Germony_df$X13,type = "l",main = "Cooling Degree Days of Germony")
+plot(Spain_df$X84,type = "l",main = "Cooling Degree Days of Spain")
+plot(UK_df$X155,type = "l",main = "Cooling Degree Days of UK")
+```
+
+
+```{r}
+#Density plot for the Energy use (EG.USE.PCAP.KG.OE)(kg of oil equivalent per capita)
+#install.packages("ggplot2")
+library("ggplot2")
+ggplot(Germony_df)+aes(x=X18)+geom_density()+labs(title = "Energy use(kg of oil equivalent per capita) of the Germony")+theme_minimal()
+ggplot(Spain_df)+aes(x=X89)+geom_density()+labs(title = "Energy use(kg of oil equivalent per capita) of the Spain")+theme_minimal()
+ggplot(UK_df)+aes(x=X160)+geom_density()+labs(title = "Energy use(kg of oil equivalent per capita) of the UK")+theme_minimal()
+```
+
+
+```{r}
+# Histogram for the Fertility rate, total (SP.DYN.TFRT.IN)(births per woman)
+ggplot(Germony_df,aes(x=X19))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(Spain_df,aes(x=X90))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(UK_df,aes(x=X161))+geom_histogram(bins = 7)+theme_minimal()
+```
+
+
+```{r}
+# Box plot for the Food production index (AG.PRD.FOOD.XD)(2014-2016 = 100)
+ggplot(Germony_df,aes(y=X20))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(Spain_df,aes(y=X91))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(UK_df,aes(y=X162))+geom_histogram(bins = 7)+theme_minimal()
+```
+
+
+```{r}
+# Density plot for	Fossil fuel energy consumption (EG.USE.COMM.FO.ZS)(% of total)
+ggplot(Germony_df)+aes(x=X22)+geom_density()+labs(title = "Fossil fuel energy consumption (% of total) of Germony")+theme_minimal()
+ggplot(Spain_df)+aes(x=X93)+geom_density()+labs(title = "Fossil fuel energy consumption (% of total) of Spain")+theme_minimal()
+ggplot(UK_df)+aes(x=X164)+geom_density()+labs(title = "Fossil fuel energy consumption (% of total) of UK")+theme_minimal()
+```
+
+
+```{r}
+# Line chart for Heating Degree Days(EN.CLC.HDDY.XD)
+plot(Germony_df$X29,type = "o", col = "red", xlab = "Heating Degree Days", main = "Line chart for Heating Degree Days in Germany")
+plot(Spain_df$X100,type = "o", col = "red", xlab = "Heating Degree Days", main = "Line chart for Heating Degree Days in Spain")
+plot(UK_df$X171,type = "o", col = "red", xlab = "Heating Degree Days", main = "Line chart for Heating Degree Days in UK")
+```
+
+
+```{r}
+# Density plot for Life expectancy at birth, total (SP.DYN.LE00.IN)(years)
+ggplot(Germony_df)+aes(x=X36)+geom_density()+labs(title = "Life expectancy at birth, total (years) of Germony")+theme_minimal()
+ggplot(Spain_df)+aes(x=X107)+geom_density()+labs(title = "Life expectancy at birth, total (years) of Spain")+theme_minimal()
+ggplot(UK_df)+aes(x=X178)+geom_density()+labs(title = "Life expectancy at birth, total (years) of UK")+theme_minimal()
+```
+
+
+```{r}
+# Box plot for the Net migration (SM.POP.NETM)
+boxplot(Germony_df$X41,main = "Box plot for the Net migration in Germany")
+boxplot(Spain_df$X112,main = "Box plot for the Net migration in Spain")
+boxplot(UK_df$X183,main = "Box plot for the Net migration in UK")
+```
+
+
+```{r}
+# Line chart for Population ages 65 and above (SP.POP.65UP.TO.ZS)(% of total population)
+plot(Germony_df$X48,type = "l",main = "Population ages 65 and above (% of total population) of Germony")
+plot(Spain_df$X119,type = "l",main = "Population ages 65 and above (% of total population) of Spain")
+plot(UK_df$X190,type = "l",main = "Population ages 65 and above (% of total population) of UK")
+```
+
+
+```{r}
+#Histogram for the Population density (EN.POP.DNST)(people per sq. km of land area)
+ggplot(Germony_df,aes(x=X49))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(Spain_df,aes(x=X120))+geom_histogram(bins = 7)+theme_minimal()
+ggplot(UK_df,aes(x=X191))+geom_histogram(bins = 7)+theme_minimal()
+
+```
+
+```{r}
+#create Germony data frame with year 
+com_ger <- Germony_df[-c(1:4),]
+com_ger <- as.data.frame(com_ger)
+year <- 1960:2023
+com_ger <- cbind(com_ger,year)
+
+#create spain data frame with year
+com_spa <- Spain_df[-c(1:4),]
+com_spa <- as.data.frame(com_spa)
+com_spa <- cbind(com_spa,year)
+
+#create Uk data frame with year
+com_uk <- UK_df[-c(1:4),]
+com_uk <- as.data.frame(com_uk)
+year <- 1960:2023
+com_uk <- cbind(com_uk,year)
+```
+```{r}
+library("ggplot2")
+```
+
+
+```{r : Line Plot}
+#Adjusted savings: natural resources depletion (% of GNI)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X3),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X73),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X144),color = "blue")+
+  labs(title = "Natural resources depletion (% of GNI)")+theme_minimal()
+```
+
+
+```{r}
+#Agricultural land (% of land area)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X4),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X75),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X146),color = "blue")+
+  labs(title = "Agricultural land (% of land area)")+theme_minimal()
+```
+
+
+```{r}
+#Cooling Degree Days
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X13),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X84),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X155),color = "blue")+
+  labs(title = "Cooling Degree Days")+theme_minimal()
+```
+```{r}
+
+```
+
+
+
+```{r}
+#Energy use (kg of oil equivalent per capita)
+
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X18),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X89),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X160),color = "blue")+
+  labs(title = "Energy use (kg of oil equivalent per capita)")+theme_minimal()
+```
+
+
+```{r}
+#Fertility rate, total (births per woman)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X19),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X90),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X161),color = "blue")+
+  labs(title = "Fertility rate, total (births per woman)")+theme_minimal()
+```
+
+
+```{r}
+#Food production index (2014-2016 = 100)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X20),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X91),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X162),color = "blue")+
+  labs(title = "Food production index (2014-2016 = 100)")+theme_minimal()
+```
+
+
+```{r}
+#Fossil fuel energy consumption (% of total)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X22),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X93),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X164),color = "blue")+
+  labs(title = "Fossil fuel energy consumption (% of total)")+theme_minimal()
+```
+
+
+```{r}
+#Heating Degree Days
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X29),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X100),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X171),color = "blue")+
+  labs(title = "Heating Degree Days")+theme_minimal()
+```
+
+
+```{r}
+#Life expectancy at birth, total (years)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X36),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X107),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X178),color = "blue")+
+  labs(title = "Life expectancy at birth, total (years)")+theme_minimal()
+```
+
+```{r}
+#Net migration
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X41),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X112),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X183),color = "blue")+
+  labs(title = "Net migration")+theme_minimal()
+```
+
+
+```{r}
+#Population ages 65 and above (% of total population)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X48),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X119),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X190),color = "blue")+
+  labs(title = "Population ages 65 and above (% of total population)")+theme_minimal()
+```
+
+
+```{r}
+#Population density (people per sq. km of land area)
+ggplot()+
+  geom_line(com_ger,mapping = aes(x = year, y = X49),color = "red")+
+  geom_line(com_spa,mapping = aes(x = year, y = X120),color = "green")+
+  geom_line(com_uk,mapping = aes(x = year, y = X191),color = "blue")+
+  labs(title = "Population density (people per sq. km of land area)")+theme_minimal()
+
+```
+
+
+
+
+
+
